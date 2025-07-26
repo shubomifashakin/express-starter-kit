@@ -8,7 +8,7 @@ function errorMiddleware(err: any, req: Request, res: Response, _next: NextFunct
   const statusCode = 500;
 
   logger.error({
-    message: "Unhanded error",
+    message: "Unhandled error",
     name: err?.name,
     statusCode,
     path: req?.originalUrl,

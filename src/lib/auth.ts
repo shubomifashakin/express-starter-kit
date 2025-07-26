@@ -8,17 +8,16 @@ import resend from "./resend";
 
 import serverEnv from "../serverEnv";
 
-import { SERVICE_NAME } from "../utils/constants";
 import { logEmailError } from "../utils/fns";
 
 const auth = betterAuth({
-  appName: SERVICE_NAME,
+  appName: serverEnv.serviceName,
 
   database: prismaAdapter(prisma, {
     provider: "postgresql", // whatever database provider you want
   }),
 
-  advanced: { cookiePrefix: "express-starter-kit" }, //TODO: change to your service name
+  advanced: { cookiePrefix: serverEnv.serviceName },
 
   emailAndPassword: {
     enabled: true,

@@ -9,6 +9,10 @@ const serverEnv = {
     process.env.NODE_ENV === "production" || process.env.NODE_ENV?.startsWith("prod") || false,
   databaseUrl: process.env.DATABASE_URL,
   resend: process.env.RESEND_KEY!,
+  logLevel: process.env.LOG_LEVEL || "info",
+  serviceName: process.env.SERVICE_NAME,
+  otelExporterEndpoint: process.env.OTEL_EXPORTER_OTLP_ENDPOINT!,
+  signozIngestionKey: process.env.SIGNOZ_INGESTION_KEY!,
 };
 
 export default serverEnv;

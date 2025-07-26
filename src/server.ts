@@ -14,9 +14,9 @@ import healthRouter from "./routes/healthRouter";
 import serverEnv from "./serverEnv";
 
 import auth from "./lib/auth";
-import logger from "./lib/logger";
 import prisma from "./lib/prisma";
 import redisClient from "./lib/redis";
+import logger, { loggerProvider } from "./lib/logger";
 
 // import createRateLimiter from "./middlewares/rateLimiters";
 import errorMiddleware from "./middlewares/errorMiddleware";
@@ -25,6 +25,7 @@ import morganToJson from "./middlewares/morgan";
 import tagRequest from "./middlewares/tagRequest";
 
 import { FORCE_EXIT_TIMEOUT } from "./utils/constants";
+import { sleep } from "./utils/fns";
 
 const app = express();
 
@@ -59,7 +60,7 @@ app.use(`/health`, healthRouter);
 
 app.all("/api/auth/{*any}", toNodeHandler(auth));
 
-app.use(express.json({ limit: 100 }));
+app.use(express.json());
 
 app.use(errorMiddleware);
 
@@ -128,8 +129,12 @@ async function handleShutdown(signal: string) {
     await redisClient.quit();
     logger.info("Redis connection closed");
 
-    clearTimeout(timeOutId);
     logger.info("Graceful shutdown complete — exiting process.");
+
+    await sleep(0.5);
+
+    await loggerProvider.shutdown();
+    clearTimeout(timeOutId);
 
     process.exit(0);
   } catch (error: any) {

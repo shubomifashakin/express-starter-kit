@@ -1,7 +1,5 @@
 export const FORCE_EXIT_TIMEOUT = 10000;
 
-export const SERVICE_NAME = "express-starter-kit";
-
 export enum MESSAGES {
   UNAUTHORIZED = "Unauthorized",
   FORBIDDEN = "Forbidden",

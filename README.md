@@ -37,7 +37,7 @@ src/
 - `Better Auth v1.3.3` for authentication
 - `Redis v5.6.0` for caching
 - `Jest v30.0.4` & `supertest` for testing
-- `Winston v3.17.0` for logging
+- `Winston v3.17.0` with `OpenTelemetry transport` for centralized logging (SigNoz)
 - `Zod v4.0.5` for validation
 - `Express-rate-limit v8.0.1` for rate limiting
 - `Multer v2.0.2` as middleware for file uploads
@@ -69,6 +69,11 @@ src/
    GOOGLE_CLIENT_ID=your-google-client-id
    GOOGLE_CLIENT_SECRET=your-google-client-secret
    RESEND_KEY=your-resend-key
+   NODE_ENV=your-environment
+   OTEL_EXPORTER_OTLP_ENDPOINT=your-otel-endpoint
+   SIGNOZ_INGESTION_KEY=your-signoz-ingestion-key
+   LOG_LEVEL=your-log-level
+   SERVICE_NAME=your-service-name
    ```
 
 4. Database Setup
