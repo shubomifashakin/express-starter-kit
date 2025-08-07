@@ -18,9 +18,7 @@ import prisma from "./lib/prisma";
 import redisClient from "./lib/redis";
 import logger, { loggerProvider } from "./lib/logger";
 
-// import createRateLimiter from "./middlewares/rateLimiters";
 import errorMiddleware from "./middlewares/errorMiddleware";
-// import isAuthorized from "./middlewares/isAuthorized";
 import morganToJson from "./middlewares/morgan";
 import tagRequest from "./middlewares/tagRequest";
 
@@ -56,8 +54,6 @@ app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(`/health`, healthRouter);
-
 app.all("/api/auth/{*any}", toNodeHandler(auth));
 
 app.use(express.json());
@@ -73,8 +69,7 @@ async function startServer() {
 
     await redisClient.connect();
 
-    //routes that require rate limiting come here e.g
-    // app.use(`${API_V1}/example`, createRateLimiter({redisClient,limit: 5,window: 60}), exampleRouter);
+    app.use(`/health`, healthRouter);
 
     server.listen(serverEnv.port, () => {
       logger.info(`Server ready on port ${serverEnv.port} (${Date.now() - start} ms)`);
